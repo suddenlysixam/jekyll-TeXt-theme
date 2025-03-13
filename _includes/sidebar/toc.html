@@ -1,4 +1,27 @@
-{%- if page.sidebar.nav -%}
+{%- if page.sidebar.col -%}
+  <div class="sidebar-toc">
+    <ul class="toc toc--navigator">
+      {%- for c in site.collections -%}
+        {%- if page.sidebar.col contains c.label -%}
+          <li class="toc-h1">{{ c.label }}</li>
+          {%- if c.docs -%}
+            {%- for _child in c.docs -%}
+              {%- include snippets/get-nav-url.html path=_child.url -%}
+              {%- assign _nav_url = __return -%}
+              {%- include snippets/get-nav-url.html path=page.url -%}
+              {%- assign _page_url = __return -%}
+              {%- if _nav_url == _page_url -%}
+                <li class="toc-h2 active"><a href="{{ _nav_url }}">{{ _child.title }}</a></li>
+              {%- else -%}
+                <li class="toc-h2"><a href="{{ _nav_url }}">{{ _child.title }}</a></li>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+      </ul>
+  </div>
+{%- elsif page.sidebar.nav -%}
   <div class="sidebar-toc">
     {%- assign _sidebar_nav = site.data.navigation[page.sidebar.nav] -%}
     {%- if _sidebar_nav -%}
