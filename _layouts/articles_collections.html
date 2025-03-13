@@ -11,7 +11,7 @@ layout: page
   {%- assign _keys = _page_articles_data_source | split: '.' -%}
   {%- endif -%}
 
-  <h2>{{ _keys[1] }}</h2>
+  <h2>{{ _keys[1] | capitalize }}</h2>
 
   {%- assign _articles = nil -%}
   {%- for _key in _keys -%}

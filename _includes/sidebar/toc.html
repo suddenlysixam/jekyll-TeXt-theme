@@ -3,7 +3,7 @@
     <ul class="toc toc--navigator">
       {%- for c in site.collections -%}
         {%- if page.sidebar.col contains c.label -%}
-          <li class="toc-h1">{{ c.label }}</li>
+          <li class="toc-h1">{{ c.label | capitalize }}</li>
           {%- if c.docs -%}
             {%- for _child in c.docs -%}
               {%- include snippets/get-nav-url.html path=_child.url -%}
