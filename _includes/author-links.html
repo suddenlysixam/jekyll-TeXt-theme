@@ -116,5 +116,13 @@
       </li>
     {%- endif -%}
 
+    {%- if _author.credly -%}
+      <li title="{{ _locale_string_follow | replace: '[NAME]', 'credly' }}">
+        <a class="button button--circle credly-button" itemprop="sameAs" href="https://www.credly.com/users/{{ _author.credly }}" target="_blank">
+          <div class="icon">{%- include svg/icon/social/credly.svg -%}</div>
+        </a>
+      </li>
+    {%- endif -%}
+
   </ul>
 </div>
