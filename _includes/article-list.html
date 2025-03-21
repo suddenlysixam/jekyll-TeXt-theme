@@ -8,6 +8,8 @@
 {%- assign _sorted_list = include.articles -%}
 {%- if include.group_by == 'year' -%}
   {%- assign _sorted_list = _sorted_list | sort: 'date' -%}
+{%- elsif include.group_by == 'author' -%}
+  {%- assign _sorted_list = _sorted_list | sort: 'author' -%}
 {%- endif -%}
 {%- if include.reverse -%}
   {%- assign _sorted_list = _sorted_list | reverse -%}
@@ -96,6 +98,13 @@
           {%- unless forloop.first -%}</ul></section>{%- endunless -%}
           <section><h2 class="article-list__group-header">{{ _currentdate }}</h2><ul class="items">
           {%- assign _date = _currentdate -%}
+        {%- endif -%}
+      {%- elsif include.group_by == 'author' -%}
+        {%- assign _currentauthor = _article.author | default: "None" -%}
+        {%- if _currentauthor != _author -%}
+          {%- unless forloop.first -%}</ul></section>{%- endunless -%}
+          <section><h2 class="article-list__group-header">{{ _currentauthor }}</h2><ul class="items">
+          {%- assign _author = _currentauthor -%}
         {%- endif -%}
       {%- endif -%}
       {%- include snippets/get-locale-string.html key='ARTICLE_LIST_DATE_FORMAT' -%}
