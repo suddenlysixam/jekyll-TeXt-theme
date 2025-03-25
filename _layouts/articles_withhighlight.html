@@ -38,7 +38,7 @@ layout: page
 
 {%- assign _type = page.articles.type | default: layout.articles.type -%}
 
-{% assign _articles = _articles | sort: 'date' | reverse | where_exp:"item","site.time <= item.date" %}
+{% assign _articles = _articles | sort: 'date' | where_exp:"item","site.time <= item.date" %}
 {%- if _articles -%}
 
   <div class="layout--articles">
