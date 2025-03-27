@@ -1,4 +1,8 @@
 {%- assign _author = site.data.authors[include.article.author] | default: site.author -%}
+{%- include snippets/assign.html
+  target=site.data.variables.default.page.show_author_info
+  source0=layout.show_author_info source1=page.show_author_info -%}
+{%- assign _show_author_info = __return -%}
 
 {%- if include.html != false -%}
 
@@ -22,7 +26,9 @@
     {%- assign _show_tags = false -%}
   {%- endif -%}
 
-  {%- assign _show_author = include.article.author -%}
+  {%- if _show_author_info -%}
+    {%- assign _show_author = include.article.author -%}
+  {%- endif -%}
 
   {%- include snippets/assign.html target=site.data.variables.default.page.pageview
     source0=layout.pageview source1=page.pageview -%}

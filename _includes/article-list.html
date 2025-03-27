@@ -8,6 +8,8 @@
 {%- assign _sorted_list = include.articles -%}
 {%- if include.group_by == 'year' -%}
   {%- assign _sorted_list = _sorted_list | sort: 'date' -%}
+{%- elsif include.group_by == 'modify-year' -%}
+  {%- assign _sorted_list = _sorted_list | sort: 'modify_date' -%}
 {%- elsif include.group_by == 'author' -%}
   {%- assign _sorted_list = _sorted_list | sort: 'author' -%}
 {%- endif -%}
@@ -99,6 +101,13 @@
           <section><h2 class="article-list__group-header">{{ _currentdate }}</h2><ul class="items">
           {%- assign _date = _currentdate -%}
         {%- endif -%}
+      {%- elsif include.group_by == 'modify-year' -%}
+        {%- assign _currentdate = _article.modify_date | date: '%Y' -%}
+        {%- if _currentdate != _date -%}
+          {%- unless forloop.first -%}</ul></section>{%- endunless -%}
+          <section><h2 class="article-list__group-header">{{ _currentdate }}</h2><ul class="items">
+          {%- assign _date = _currentdate -%}
+        {%- endif -%}
       {%- elsif include.group_by == 'author' -%}
         {%- assign _currentauthor = _article.author | default: "None" -%}
         {%- if _currentauthor != _author -%}
@@ -111,7 +120,11 @@
       <li class="item" itemscope itemtype="http://schema.org/BlogPosting" data-tags="{{ _tags }}">
         <div class="item__content">
           {%- if include.show_info -%}
-            <span class="item__meta">{{ _article.date | date: __return }}</span>
+            {%- if include.group_by == 'modify-year' -%}
+              <span class="item__meta">{{ _article.modify_date | date: __return }}</span>
+            {%- else -%}
+              <span class="item__meta">{{ _article.date | date: __return }}</span>
+            {%- endif -%}
           {%- endif -%}
           <a itemprop="headline" class="item__header" href="{{ _article_url }}">{{ _article.title }}</a></div>
       </li>

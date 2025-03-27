@@ -53,7 +53,7 @@ layout: page
           source0=layout.articles.show_info source1=page.articles.show_info -%}
         {%- assign _show_info = __return -%}
 
-        {%- include article-list.html articles=_articles type='brief' show_info=_show_info -%}
+        {%- include article-list.html articles=_articles type='brief' show_info=_show_info reverse=true group_by='modify-year' -%}
 
       {%- else -%}
         {%- include snippets/assign.html
