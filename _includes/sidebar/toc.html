@@ -21,6 +21,28 @@
       {%- endfor -%}
       </ul>
   </div>
+{%- elsif page.sidebar.cat -%}
+  <div class="sidebar-toc">
+    <ul class="toc toc--navigator">
+      {%- for _category in page.sidebar.cat -%}
+        {%- assign _articles = site.posts | where_exp:"item","item.categories contains _category" -%}
+        {%- if _articles -%}
+          <li class="toc-h1">{{ _category | capitalize }}</li>
+          {%- for _article in _articles -%}
+            {%- include snippets/get-nav-url.html path=_article.url -%}
+            {%- assign _nav_url = __return -%}
+            {%- include snippets/get-nav-url.html path=page.url -%}
+            {%- assign _page_url = __return -%}
+            {%- if _nav_url == _page_url -%}
+              <li class="toc-h2 active"><a href="{{ _nav_url }}">{{ _article.title }}</a></li>
+            {%- else -%}
+              <li class="toc-h2"><a href="{{ _nav_url }}">{{ _article.title }}</a></li>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+      </ul>
+  </div>
 {%- elsif page.sidebar.nav -%}
   <div class="sidebar-toc">
     {%- assign _sidebar_nav = site.data.navigation[page.sidebar.nav] -%}
