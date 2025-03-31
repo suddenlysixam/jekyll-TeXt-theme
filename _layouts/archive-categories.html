@@ -32,11 +32,13 @@ titles:
     <tr style="border:0px solid;width:100%">
       {%- for _category in page.articles.data_sources -%}
         <td style="border:0px solid;width:50%;vertical-align:top;">
-          <h1>{{ _category | capitalize }}</h1>
-            <div class="js-result layout--archive__result d-none">
-              {%- assign _articles = site.posts | where_exp:"item","item.categories contains _category" -%}
-              {%- include article-list.html articles=_articles type='brief' show_info=true reverse=true group_by='modify-year' -%}
-            </div>
+          {%- if page.articles.data_sources.size > 1 -%}
+            <h1><a href={{ _category }}>{{ _category | capitalize }}</a></h1>
+          {%- endif -%}
+          <div class="js-result layout--archive__result d-none">
+            {%- assign _articles = site.posts | where_exp:"item","item.categories contains _category" -%}
+            {%- include article-list.html articles=_articles type='brief' show_info=true reverse=true group_by='modify-year' -%}
+          </div>
         </td>
       {% endfor %}
     </tr>
