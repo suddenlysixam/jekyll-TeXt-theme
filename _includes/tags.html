@@ -1,7 +1,18 @@
 {%- assign _tag_max_size = 1 -%}
 {%- assign _tag_min_size = 1 -%}
 {%- assign _tag_cur_size = 1 -%}
-{%- assign _tags = site.tags | sort -%}
+{%- if page.articles.exclude_tags -%}
+  {% assign _tags_filtered = "" | split: ',' %}
+  {%- assign _tags = site.tags -%}
+  {% for _tag in _tags %}
+    {% unless page.articles.exclude_tags contains _tag[0] %}
+      {%- assign _tags_filtered = _tags_filtered | push: _tag -%}
+    {% endunless %}
+  {% endfor %}
+  {%- assign _tags = _tags_filtered | sort -%}
+{%- else -%}
+  {%- assign _tags = site.tags | sort -%}
+{%- endif -%}
 {%- for _tag in _tags -%}
   {%- assign _tag_cur_size = _tag[1].size -%}
   {%- if _tag_cur_size > _tag_max_size -%}
