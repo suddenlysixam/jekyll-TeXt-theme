@@ -25,24 +25,52 @@ titles:
   tr      : &TR       Arşivdekiler
   # @end locale config
 ---
+<style>
+  @media screen and (max-width: 700px) {
+    .hide-mobile {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 701px) {
+    .hide-desktop {
+      display: none;
+    }
+  }
+</style>
 
-<div class="layout--archive js-all">
-  {%- include tags.html -%}
-  <table style="border:0px solid;width:100%">
-    <tr style="border:0px solid;width:100%">
-      {%- for _category in page.articles.data_sources -%}
-        <td style="border:0px solid;width:50%;vertical-align:top;">
-          {%- if page.articles.data_sources.size > 1 -%}
-            <h1><a href={{ _category }}>{{ _category | capitalize }}</a></h1>
-          {%- endif -%}
-          <div class="js-result layout--archive__result d-none">
-            {%- assign _articles = site.posts | where_exp:"item","item.categories contains _category" -%}
-            {%- include article-list.html articles=_articles type='brief' show_info=true reverse=true group_by='modify-year' -%}
-          </div>
-        </td>
-      {% endfor %}
-    </tr>
-  </table>
+<div class="hide-mobile">
+  <div class="layout--archive js-all">
+    {%- include tags.html -%}
+    <table style="border:0px solid;width:100%">
+      <tr style="border:0px solid;width:100%">
+        {%- for _category in page.articles.data_sources -%}
+          <td style="border:0px solid;width:50%;vertical-align:top;">
+            {%- if page.articles.data_sources.size > 1 -%}
+              <h1><a href={{ _category }}>{{ _category | capitalize }}</a></h1>
+            {%- endif -%}
+            <div class="js-result layout--archive__result d-none">
+              {%- assign _articles = site.posts | where_exp:"item","item.categories contains _category" -%}
+              {%- include article-list.html articles=_articles type='brief' show_info=true reverse=true group_by='modify-year' -%}
+            </div>
+          </td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="hide-desktop">
+  <div class="layout--archive js-all">
+    {%- include tags.html -%}
+    {%- for _category in page.articles.data_sources -%}
+    {%- if page.articles.data_sources.size > 1 -%}
+      <h1><a href={{ _category }}>{{ _category | capitalize }}</a></h1>
+    {%- endif -%}
+    <div class="js-result layout--archive__result d-none">
+      {%- assign _articles = site.posts | where_exp:"item","item.categories contains _category" -%}
+      {%- include article-list.html articles=_articles type='brief' show_info=true reverse=true group_by='modify-year' -%}
+    </div>
+    {% endfor %}
+  </div>
 </div>
 
 <script>
