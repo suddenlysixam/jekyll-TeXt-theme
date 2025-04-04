@@ -19,6 +19,7 @@ blocks.forEach((block) => {
 async function copyCode(block, button) {
   let code = block.querySelector("code");
   let text = code.innerText;
+  text = text.replace(/^\s+|\s+$/g, '');
 
   await navigator.clipboard.writeText(text);
 
