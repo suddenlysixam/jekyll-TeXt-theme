@@ -41,7 +41,7 @@ layout: page
 
     <h2>{{ _future_header }}</h2>
   {% else %}
-    {% assign _articles = _all_articles | where_exp:"item","item.categories contains _data_category" %}
+    {% assign _articles = _all_articles | sort: 'modify_date' | reverse | where_exp:"item","item.categories contains _data_category" %}
 
     <h2>Latest {{ _data_category | capitalize }}</h2>
   {% endif %}
